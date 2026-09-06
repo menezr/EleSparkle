@@ -1,0 +1,20 @@
+{
+  "name": "Las Tareas de Elena",
+  "short_name": "EleTareas",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff4fb",
+  "theme_color": "#8b68b5",
+  "icons": [
+    {
+      "src": "https://i.pinimg.com/474x/34/a7/aa/34a7aa2aca37af2b4d39a6d8382dcb71.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://i.pinimg.com/474x/34/a7/aa/34a7aa2aca37af2b4d39a6d8382dcb71.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
