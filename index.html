@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las Tareas de Elena ✨</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #fff4fb, #f3f0ff, #eefdff);
+            color: #5d4b70;
+            overflow-x: hidden;
+        }
+
+        .app {
+            width: 100%;
+            min-height: 100vh;
+            padding: clamp(12px, 2vw, 25px) clamp(10px, 3vw, 40px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .princess {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 8px;
+            padding: 3px;
+            border: 3px solid #ffd95a;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 4px 12px rgba(120, 70, 160, .22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            animation: princessFloat 3s ease-in-out infinite;
+        }
+
+        .princess img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        @keyframes princessFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-6px) rotate(2deg); }
+        }
+
+        .title {
+            margin: 0;
+            font-size: clamp(24px, 4vw, 42px);
+            font-weight: 700;
+            color: #8b68b5;
+            text-shadow: 0 3px 0 white;
+        }
+
+        .subtitle {
+            margin-top: 2px;
+            font-size: clamp(13px, 1.8vw, 18px);
+            color: #9a87aa;
+        }
+
+        .progress-box {
+            max-width: 850px;
+            margin: 10px auto 18px;
+            background: rgba(255,255,255,.85);
+            border-radius: 20px;
+            padding: 10px 15px;
+            box-shadow: 0 6px 20px rgba(100,70,130,.10);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 15px;
+            border-radius: 20px;
+            background: #eee7f7;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #ff9fd3, #a88bea, #75dce8);
+            transition: width .6s ease;
+        }
+
+        .stars {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: clamp(18px, 2.5vw, 25px);
+            letter-spacing: 3px;
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: clamp(6px, 1.2vw, 18px);
+            width: 100%;
+        }
+
+        .task-card {
+            position: relative;
+            background: rgba(255,255,255,.94);
+            border-radius: clamp(14px, 2vw, 25px);
+            padding: clamp(10px, 1.5vw, 18px);
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(100,70,130,.12);
+            border: 3px solid transparent;
+            transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px rgba(100,70,130,.18);
+        }
+
+        .task-icon {
+            width: clamp(55px, 6vw, 85px);
+            height: clamp(55px, 6vw, 85px);
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(30px, 4vw, 48px);
+            background: linear-gradient(135deg, #fff2a8, #ffd1e7);
+            box-shadow: inset 0 0 0 4px rgba(255,255,255,.8);
+        }
+
+        .task-name {
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(12px, 1.5vw, 17px);
+            line-height: 1.15;
+            font-weight: 600;
+            color: #655275;
+        }
+
+        .reward {
+            margin: 7px 0;
+            font-size: clamp(11px, 1.3vw, 14px);
+            color: #a084b6;
+        }
+
+        .complete-btn {
+            width: 100%;
+            border: none;
+            border-radius: 15px;
+            padding: clamp(7px, 1vw, 11px);
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(11px, 1.3vw, 15px);
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #ff91c9, #a889e8);
+            box-shadow: 0 5px 12px rgba(160,100,190,.20);
+            cursor: pointer;
+            transition: transform .15s ease, opacity .2s ease;
+        }
+
+        .complete-btn:hover { transform: scale(1.03); }
+        .complete-btn:active { transform: scale(.96); }
+
+        .task-card.completed {
+            opacity: .72;
+            border-color: #b9eadc;
+            background: linear-gradient(145deg, #ffffff, #effff9);
+        }
+
+        .task-card.completed .task-icon {
+            background: linear-gradient(135deg, #c8f8e9, #d9f5ff);
+        }
+
+        .task-card.completed .complete-btn {
+            background: linear-gradient(135deg, #62d5ad, #54bfd5);
+        }
+
+        .victory {
+            display: none;
+            margin: 20px auto 0;
+            max-width: 700px;
+            padding: 18px;
+            text-align: center;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #fff8c7, #ffe4f3);
+            box-shadow: 0 10px 30px rgba(100,70,130,.15);
+            animation: victoryPop .6s ease;
+        }
+
+        .victory.show { display: block; }
+
+        .victory-title {
+            font-size: clamp(22px, 4vw, 35px);
+            font-weight: 700;
+            color: #8b68b5;
+        }
+
+        .victory-text {
+            margin-top: 5px;
+            font-size: clamp(13px, 2vw, 17px);
+            color: #846d94;
+        }
+
+        @keyframes victoryPop {
+            0% { transform: scale(.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .reset-btn {
+            margin-top: 10px;
+            border: none;
+            border-radius: 15px;
+            padding: 8px 18px;
+            background: white;
+            color: #8b68b5;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(100,70,130,.12);
+            cursor: pointer;
+        }
+
+        .confetti {
+            position: fixed;
+            top: -20px;
+            font-size: 25px;
+            pointer-events: none;
+            animation: fall 2.5s linear forwards;
+            z-index: 999;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 900px) {
+            .tasks-grid { gap: 8px; }
+            .task-card { padding: 9px 6px; }
+            .task-name { min-height: 48px; }
+        }
+
+        @media (max-width: 650px) {
+            .app { padding: 10px 7px; }
+            .tasks-grid { gap: 5px; }
+            .task-card { border-radius: 13px; border-width: 2px; }
+            .task-icon { width: 48px; height: 48px; font-size: 27px; }
+            .task-name { min-height: 43px; font-size: 10px; }
+            .reward { font-size: 9px; }
+            .complete-btn { padding: 6px 2px; font-size: 9px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="header">
+        <div class="princess">
+            <img src="https://i.redd.it/0usi0sntmu3g1.png" alt="Princesa de Elena" loading="lazy">
+        </div>
+        <h1 class="title">✨ Las tareas de Elena ✨</h1>
+        <div class="subtitle">¡Completa tus tareas y gana estrellas! ⭐</div>
+    </header>
+
+    <div class="progress-box">
+        <div class="progress-info">
+            <span>Mi progreso</span>
+            <span id="progressText">0 de 5</span>
+        </div>
+        <div class="progress">
+            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div class="stars" id="stars">☆ ☆ ☆ ☆ ☆</div>
+
+    <main class="tasks-grid" id="tasksGrid">
+
+        <div class="task-card" data-task="cama">
+            <div class="task-icon">🛏️</div>
+            <div class="task-name">Ordenar<br>la cama</div>
+            <div class="reward">⭐ 1 estrella</div>
+            <button class="complete-btn" data-action="complete">¡Listo! ✨</button>
+        </div>
+
+        <div class="task-card" data-task="juguetes">
+            <div class="task-icon">🧸</div>
+            <div class="task-name">Ordenar<br>los juguetes</div>
+            <div class="reward">⭐ 1 estrella</div>
+            <button class="complete-btn" data-action="complete">¡Listo! ✨</button>
+        </div>
+
+        <div class="task-card" data-task="dientes">
+            <div class="task-icon">🪥</div>
+            <div class="task-name">Lavarse<br>los dientes</div>
+            <div class="reward">⭐ 1 estrella</div>
+            <button class="complete-btn" data-action="complete">¡Listo! ✨</button>
+        </div>
+
+        <div class="task-card" data-task="banarse">
+            <div class="task-icon">🛁</div>
+            <div class="task-name">Bañarse</div>
+            <div class="reward">⭐ 1 estrella</div>
+            <button class="complete-btn" data-action="complete">¡Listo! ✨</button>
+        </div>
+
+        <div class="task-card" data-task="perro">
+            <div class="task-icon">🐶</div>
+            <div class="task-name">Darle de comer<br>al perro</div>
+            <div class="reward">⭐ 1 estrella</div>
+            <button class="complete-btn" data-action="complete">¡Listo! ✨</button>
+        </div>
+
+    </main>
+
+    <div class="victory" id="victory">
+        <div class="victory-title">🎉 ¡Excelente, Elena! 🎉</div>
+        <div class="victory-text">
+            ¡Completaste todas tus tareas!
+            <br>
+            ¡Eres una súper ayudante! 👑✨
+        </div>
+        <button class="reset-btn" id="resetBtn">🔄 Empezar de nuevo</button>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tasks = ["cama", "juguetes", "dientes", "banarse", "perro"];
+        
+        let completedTasks = new Set(
+            JSON.parse(localStorage.getItem("elenaTasks")) || []
+        );
+
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
+        const starsContainer = document.getElementById("stars");
+        const victoryElement = document.getElementById("victory");
+        const tasksGrid = document.getElementById("tasksGrid");
+        const resetBtn = document.getElementById("resetBtn");
+
+        function saveTasks() {
+            localStorage.setItem("elenaTasks", JSON.stringify([...completedTasks]));
+        }
+
+        function completeTask(taskName) {
+            if (completedTasks.has(taskName)) return;
+
+            completedTasks.add(taskName);
+            saveTasks();
+            updateUI();
+            createEffects(5, 1.5, 3000, ["✨", "⭐", "💖", "🌟"]);
+        }
+
+        function resetTasks() {
+            completedTasks.clear();
+            saveTasks();
+            updateUI();
+        }
+
+        function updateUI() {
+            const total = tasks.length;
+            const completedCount = completedTasks.size;
+            const percentage = (completedCount / total) * 100;
+
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${completedCount} de ${total}`;
+            starsContainer.textContent = "⭐".repeat(completedCount) + "☆".repeat(total - completedCount);
+
+            tasks.forEach(task => {
+                const card = tasksGrid.querySelector(`[data-task="${task}"]`);
+                if (!card) return;
+                
+                const button = card.querySelector(".complete-btn");
+                const isCompleted = completedTasks.has(task);
+
+                card.classList.toggle("completed", isCompleted);
+                button.textContent = isCompleted ? "✓ ¡Completada!" : "¡Listo! ✨";
+            });
+
+            const isAllCompleted = completedCount === total;
+            victoryElement.classList.toggle("show", isAllCompleted);
+
+            if (isAllCompleted) {
+                createEffects(25, 2, 4500, ["🎉", "✨", "⭐", "💖", "🌟", "🎀"]);
+            }
+        }
+
+        function createEffects(amount, minDuration, durationMs, symbols) {
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < amount; i++) {
+                const particle = document.createElement("div");
+                particle.className = "confetti";
+                particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${minDuration + Math.random() * 2}s`;
+                particle.style.animationDelay = `${Math.random() * 0.8}s`;
+
+                fragment.appendChild(particle);
+
+                setTimeout(() => particle.remove(), durationMs);
+            }
+
+            document.body.appendChild(fragment);
+        }
+
+        tasksGrid.addEventListener("click", (e) => {
+            if (e.target.matches('[data-action="complete"]')) {
+                const card = e.target.closest("[data-task]");
+                if (card) completeTask(card.dataset.task);
+            }
+        });
+
+        resetBtn.addEventListener("click", resetTasks);
+
+        updateUI();
+    });
+</script>
+
+</body>
+</html>
